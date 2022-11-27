@@ -1,10 +1,11 @@
 using AgendamentoAPI.Context;
+using AgendamentoAPI.EndPoints;
+using AgendamentoAPI.Repositorys;
+using AgendamentoAPI.Repositorys.Implementations;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -13,9 +14,12 @@ var connectionString = builder.Configuration.GetConnectionString("DC");
 builder.Services.AddDbContext<ContextSeries>(options =>
     options.UseSqlServer(connectionString));
 
+builder.Services.AddScoped<PacienteRepository>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.MapPacienteEndPoint();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

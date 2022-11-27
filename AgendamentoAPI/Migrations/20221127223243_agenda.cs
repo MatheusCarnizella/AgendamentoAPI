@@ -32,7 +32,7 @@ namespace AgendamentoAPI.Migrations
                     pacienteCPF = table.Column<int>(type: "int", fixedLength: true, maxLength: 11, nullable: false),
                     pacienteNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     agendamentoId = table.Column<int>(type: "int", nullable: false),
-                    agendamentoNome = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    agendamentoMedico = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

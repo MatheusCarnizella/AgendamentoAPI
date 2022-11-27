@@ -8,6 +8,6 @@ public class Paciente
     public DateTime pacienteNascimento { get; set; }
 
     public int agendamentoId { get; set; }
-    public string? agendamentoNome { get; set; }
+    public string? agendamentoMedico { get; set; }
     public ICollection<Agendamento>? Agendamento { get; set; }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendamentoAPI.Migrations
 {
     [DbContext(typeof(ContextSeries))]
-    [Migration("20221127210438_agenda")]
+    [Migration("20221127223243_agenda")]
     partial class agenda
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,7 +76,7 @@ namespace AgendamentoAPI.Migrations
                     b.Property<int>("agendamentoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("agendamentoNome")
+                    b.Property<string>("agendamentoMedico")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("pacienteCPF")

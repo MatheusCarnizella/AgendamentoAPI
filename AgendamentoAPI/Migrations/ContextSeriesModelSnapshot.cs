@@ -74,7 +74,7 @@ namespace AgendamentoAPI.Migrations
                     b.Property<int>("agendamentoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("agendamentoNome")
+                    b.Property<string>("agendamentoMedico")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("pacienteCPF")

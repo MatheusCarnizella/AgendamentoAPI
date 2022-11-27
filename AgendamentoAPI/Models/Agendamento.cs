@@ -7,5 +7,8 @@ public class Agendamento
     public DateTime agendamentoDia { get; set; }
 
     public int pacienteId { get; set; }
-    public ICollection<Paciente>? Paciente { get; set; }
+    public Paciente? Paciente { get; set; }
+
+    public int confirmarId { get; set; }
+    public ConfirmarAgendamento? Confirmar { get; set; }
 }

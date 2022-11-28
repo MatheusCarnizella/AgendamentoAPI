@@ -1,4 +1,6 @@
-﻿namespace AgendamentoAPI.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace AgendamentoAPI.Models;
 
 public class Agendamento
 {
@@ -7,8 +9,10 @@ public class Agendamento
     public DateTime agendamentoDia { get; set; }
 
     public int pacienteId { get; set; }
+    [JsonIgnore]
     public Paciente? Paciente { get; set; }
 
     public int confirmarId { get; set; }
+    [JsonIgnore]
     public ConfirmarAgendamento? Confirmar { get; set; }
 }

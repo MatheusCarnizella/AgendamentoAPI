@@ -15,10 +15,12 @@ builder.Services.AddDbContext<ContextSeries>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
+builder.Services.AddScoped<IAgendamentoRepository, AgendamentoRepository>();
 
 var app = builder.Build();
 
 app.MapPacienteEndPoint();
+app.MapAgendamentoEndPoint();
 
 if (app.Environment.IsDevelopment())
 {

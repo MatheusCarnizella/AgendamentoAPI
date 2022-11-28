@@ -36,7 +36,6 @@ namespace AgendamentoAPI.EndPoints
             ep.MapPut("/paciente/atualizarPaciente/{Id:int}", (int Id, Paciente paciente, IPacienteRepository repository) =>
             {
                 repository.Put(paciente);
-
                 return Results.Ok(paciente);
             })
                 .Produces<List<Paciente>>(StatusCodes.Status200OK)

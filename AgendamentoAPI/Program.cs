@@ -14,7 +14,7 @@ var connectionString = builder.Configuration.GetConnectionString("DC");
 builder.Services.AddDbContext<ContextSeries>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<PacienteRepository>();
+builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 
 var app = builder.Build();
 

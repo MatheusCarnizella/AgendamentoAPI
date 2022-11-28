@@ -26,21 +26,21 @@ public class PacienteRepository : IPacienteRepository
         return paciente;
     }
 
-    public async void Post(Paciente entity)
+    public void Post(Paciente entity)
     {
          _context.Set<Paciente>().Add(entity);
-         await _context.SaveChangesAsync();
+         _context.SaveChanges();
     }
 
-    public async Task Put(Paciente entity)
+    public void Put(Paciente entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
         _context.Set<Paciente>().Update(entity);
-        await _context.SaveChangesAsync();
+        _context.SaveChanges();
     }
     public void Delete(Paciente entity)
     {
         _context.Set<Paciente>().Remove(entity);
-        _context.SaveChangesAsync();
+        _context.SaveChanges();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AgendamentoAPI.Models;
+using AgendamentoAPI.Repositorys;
 using AgendamentoAPI.Repositorys.Implementations;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +9,7 @@ namespace AgendamentoAPI.EndPoints
     {
         public static void MapPacienteEndPoint(this WebApplication ep)
         {
-            ep.MapPost("/paciente/cadastrarPaciente", (Paciente paciente, PacienteRepository repository) =>
+            ep.MapPost("/paciente/cadastrarPaciente", (Paciente paciente, IPacienteRepository repository) =>
             {
                 repository.Post(paciente);
                 return Results.Created($"/cadastrarPaciente/{paciente.pacienteId}", paciente); 
@@ -17,13 +18,13 @@ namespace AgendamentoAPI.EndPoints
                 .WithName("CriarUmNovoPaciente")
                 .WithTags("Pacientes");
 
-            ep.MapGet("/paciente/pegartodosPacientes", async (PacienteRepository repository) =>
+            ep.MapGet("/paciente/pegartodosPacientes", async (IPacienteRepository repository) =>
             await repository.GetAll())
                 .Produces<List<Paciente>>(StatusCodes.Status200OK)
                 .WithName("PegarPacientes")
                 .WithTags("Pacientes");
 
-            ep.MapGet("/paciente/pegartodosPaciente/{Id:int}", async (int Id, PacienteRepository repository) =>
+            ep.MapGet("/paciente/pegartodosPaciente/{Id:int}", async (int Id, IPacienteRepository repository) =>
             {
                 return await repository.GetById(p => p.pacienteId == Id);
             })
@@ -32,17 +33,18 @@ namespace AgendamentoAPI.EndPoints
                 .WithName("PegarPacientesPeloId")
                 .WithTags("Pacientes");
 
-            ep.MapPut("/paciente/atualizarPaciente/{Id:int}", (int Id, Paciente paciente, PacienteRepository repository) =>
+            ep.MapPut("/paciente/atualizarPaciente/{Id:int}", (int Id, Paciente paciente, IPacienteRepository repository) =>
             {
-               var atualizar = repository.Put(paciente);
-               return Results.Ok(atualizar);
+                repository.Put(paciente);
+
+                return Results.Ok(paciente);
             })
                 .Produces<List<Paciente>>(StatusCodes.Status200OK)
-                .Produces(StatusCodes.Status400BadRequest)
+                .Produces(StatusCodes.Status404NotFound)
                 .WithName("AtualizarPacientesPeloId")
                 .WithTags("Pacientes");
 
-            ep.MapDelete("/paciente/deletarPaciente/{Id:int}", async (int Id, PacienteRepository repository) =>
+            ep.MapDelete("/paciente/deletarPaciente/{Id:int}", async (int Id, IPacienteRepository repository) =>
             {
                 var delete = await repository.GetById(p => p.pacienteId == Id);
 

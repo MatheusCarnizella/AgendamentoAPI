@@ -1,4 +1,6 @@
-﻿namespace AgendamentoAPI.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace AgendamentoAPI.Models;
 
 public class Paciente
 {
@@ -7,7 +9,10 @@ public class Paciente
     public int pacienteCPF { get; set; }
     public DateTime pacienteNascimento { get; set; }
 
+    [JsonIgnore]
     public int agendamentoId { get; set; }
+    [JsonIgnore]
     public string? agendamentoMedico { get; set; }
+    [JsonIgnore]
     public ICollection<Agendamento>? Agendamento { get; set; }
 }

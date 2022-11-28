@@ -1,6 +1,7 @@
 ﻿using AgendamentoAPI.Context;
 using AgendamentoAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace AgendamentoAPI.Repositorys.Implementations;
 
@@ -19,9 +20,9 @@ public class PacienteRepository : IPacienteRepository
         return paciente;
     }
 
-    public async Task<Paciente?> GetById(int id)
+    public async Task<Paciente?> GetById(Expression<Func<Paciente, bool>> predicate)
     {
-        Paciente? paciente = await _context.Set<Paciente>().SingleOrDefaultAsync(x => x.pacienteId == id);
+        Paciente? paciente = await _context.Set<Paciente>().SingleOrDefaultAsync(predicate);
         return paciente;
     }
 
@@ -31,15 +32,15 @@ public class PacienteRepository : IPacienteRepository
          await _context.SaveChangesAsync();
     }
 
-    public async void Put(Paciente entity)
+    public async Task Put(Paciente entity)
     {
         _context.Entry(entity).State = EntityState.Modified;
         _context.Set<Paciente>().Update(entity);
         await _context.SaveChangesAsync();
     }
-    public async void Delete(Paciente entity)
+    public void Delete(Paciente entity)
     {
         _context.Set<Paciente>().Remove(entity);
-        await _context.SaveChangesAsync();
+        _context.SaveChangesAsync();
     }
 }

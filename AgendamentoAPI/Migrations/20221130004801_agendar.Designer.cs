@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendamentoAPI.Migrations
 {
     [DbContext(typeof(ContextSeries))]
-    [Migration("20221127223243_agenda")]
-    partial class agenda
+    [Migration("20221130004801_agendar")]
+    partial class agendar
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

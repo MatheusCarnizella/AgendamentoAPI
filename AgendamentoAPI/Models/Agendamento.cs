@@ -12,7 +12,5 @@ public class Agendamento
     [JsonIgnore]
     public Paciente? Paciente { get; set; }
 
-    public int confirmarId { get; set; }
-    [JsonIgnore]
-    public ConfirmarAgendamento? Confirmar { get; set; }
+   public ConfirmarAgendamento? Confirmar { get; set; }
 }

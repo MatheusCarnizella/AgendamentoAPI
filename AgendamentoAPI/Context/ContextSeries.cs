@@ -16,7 +16,7 @@ public class ContextSeries : DbContext
     {
         model.Entity<Paciente>().HasKey(p => p.pacienteId);
         model.Entity<Paciente>().Property(p => p.pacienteNome).IsRequired();
-        model.Entity<Paciente>().Property(p => p.pacienteCPF).IsRequired().HasMaxLength(11).IsFixedLength(true);
+        model.Entity<Paciente>().Property(p => p.pacienteCPF).IsRequired().HasMaxLength(11);
         model.Entity<Paciente>().Property(p => p.pacienteNascimento).IsRequired();
 
         model.Entity<Agendamento>().HasKey(a => a.agendamentoId);
@@ -31,9 +31,8 @@ public class ContextSeries : DbContext
             .WithOne(x => x.Paciente)
             .HasForeignKey(x => x.agendamentoId);
 
-        model.Entity<Agendamento>()
-            .HasOne(x => x.Confirmar)
-            .WithMany(x => x.Agendamento)
-            .HasForeignKey(x => x.confirmarId);
+        model.Entity<ConfirmarAgendamento>()
+            .HasOne(x => x.Agendamento)
+            .WithOne(x => x.Confirmar);            
     }
 }

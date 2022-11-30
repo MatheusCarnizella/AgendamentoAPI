@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AgendamentoAPI.Migrations
 {
-    public partial class agenda : Migration
+    public partial class agendar : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

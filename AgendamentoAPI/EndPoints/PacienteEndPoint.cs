@@ -9,33 +9,33 @@ public static class PacienteEndPoint
 {
     public static void MapPacienteEndPoint(this WebApplication ep)
     {
-        ep.MapPost("/paciente/cadastrarPaciente", (Paciente paciente, IPacienteRepository repository) =>
+        ep.MapPost("/paciente/cadastrarPaciente", (Paciente paciente, IPacienteRepository _repository) =>
         {
-            repository.Post(paciente);
+            _repository.Post(paciente);
             return Results.Created($"/cadastrarPaciente/{paciente.pacienteId}", paciente); 
         })
             .Produces<Paciente>(StatusCodes.Status201Created)
             .WithName("CriarUmNovoPaciente")
             .WithTags("Pacientes");
 
-        ep.MapGet("/paciente/pegartodosPacientes", async (IPacienteRepository repository) =>
-        await repository.GetAll())
+        ep.MapGet("/paciente/pegartodosPacientes", async (IPacienteRepository _repository) =>
+        await _repository.GetAll())
             .Produces<List<Paciente>>(StatusCodes.Status200OK)
             .WithName("PegarPacientes")
             .WithTags("Pacientes");
 
-        ep.MapGet("/paciente/pegartodosPaciente/{Id:int}", async (int Id, IPacienteRepository repository) =>
+        ep.MapGet("/paciente/pegartodosPaciente/{Id:int}", async (int Id, IPacienteRepository _repository) =>
         {
-            return await repository.GetById(p => p.pacienteId == Id);
+            return await _repository.GetById(p => p.pacienteId == Id);
         })
             .Produces<List<Paciente>>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .WithName("PegarPacientesPeloId")
             .WithTags("Pacientes");
 
-        ep.MapPut("/paciente/atualizarPaciente/{Id:int}", (int Id, Paciente paciente, IPacienteRepository repository) =>
+        ep.MapPut("/paciente/atualizarPaciente/{Id:int}", (int Id, Paciente paciente, IPacienteRepository _repository) =>
         {
-            repository.Put(paciente);
+            _repository.Put(paciente);
             return Results.Ok(paciente);
         })
             .Produces<List<Paciente>>(StatusCodes.Status200OK)
@@ -43,16 +43,16 @@ public static class PacienteEndPoint
             .WithName("AtualizarPacientesPeloId")
             .WithTags("Pacientes");
 
-        ep.MapDelete("/paciente/deletarPaciente/{Id:int}", async (int Id, IPacienteRepository repository) =>
+        ep.MapDelete("/paciente/deletarPaciente/{Id:int}", async (int Id, IPacienteRepository _repository) =>
         {
-            var delete = await repository.GetById(p => p.pacienteId == Id);
+            var delete = await _repository.GetById(p => p.pacienteId == Id);
 
             if (delete is null)
             {
                 return Results.NotFound("Produto não encontrado");
             }
 
-            repository.Delete(delete);
+            _repository.Delete(delete);
             return Results.Ok(delete);
         })
             .Produces<Paciente>(StatusCodes.Status200OK)

@@ -7,7 +7,7 @@ namespace AgendamentoAPI.Repositorys
     {
         Task<List<Paciente>>GetAll();
         Task<Paciente?> GetById(Expression<Func<Paciente, bool>> predicate);
-        void Post(Paciente entity);
+        Task Post(Paciente entity);
         void Put(Paciente entity);
         void Delete(Paciente entity);
     }

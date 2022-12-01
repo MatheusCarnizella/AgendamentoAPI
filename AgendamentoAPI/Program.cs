@@ -16,11 +16,13 @@ builder.Services.AddDbContext<ContextSeries>(options =>
 
 builder.Services.AddScoped<IPacienteRepository, PacienteRepository>();
 builder.Services.AddScoped<IAgendamentoRepository, AgendamentoRepository>();
+builder.Services.AddScoped<IConfirmarAgendamentoRepository, ConfirmarAgendamentoRepository>();
 
 var app = builder.Build();
 
 app.MapPacienteEndPoint();
 app.MapAgendamentoEndPoint();
+app.MapConfirmarAgendamentoEndPoint();
 
 if (app.Environment.IsDevelopment())
 {

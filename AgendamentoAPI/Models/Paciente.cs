@@ -11,8 +11,5 @@ public class Paciente
 
     [JsonIgnore]
     public int agendamentoId { get; set; }
-    [JsonIgnore]
-    public string? agendamentoMedico { get; set; }
-    [JsonIgnore]
     public ICollection<Agendamento>? Agendamento { get; set; }
 }

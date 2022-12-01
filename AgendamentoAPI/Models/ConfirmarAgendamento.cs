@@ -1,4 +1,6 @@
-﻿namespace AgendamentoAPI.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace AgendamentoAPI.Models;
 
 public class ConfirmarAgendamento
 {
@@ -6,5 +8,6 @@ public class ConfirmarAgendamento
     public bool confirmarAgendamento { get; set; }
 
     public int agendamentoId { get; set; }
-    public Agendamento? Agendamento { get; set; } 
+
+    public Agendamento? Agendamento { get; set; }
 }

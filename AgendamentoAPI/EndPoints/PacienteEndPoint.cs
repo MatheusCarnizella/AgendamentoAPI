@@ -9,9 +9,9 @@ public static class PacienteEndPoint
 {
     public static void MapPacienteEndPoint(this WebApplication ep)
     {
-        ep.MapPost("/paciente/cadastrarPaciente", (Paciente paciente, IPacienteRepository _repository) =>
+        ep.MapPost("/paciente/cadastrarPaciente", async (Paciente paciente, IPacienteRepository _repository) =>
         {
-            _repository.Post(paciente);
+            await _repository.Post(paciente);
             return Results.Created($"/cadastrarPaciente/{paciente.pacienteId}", paciente); 
         })
             .Produces<Paciente>(StatusCodes.Status201Created)

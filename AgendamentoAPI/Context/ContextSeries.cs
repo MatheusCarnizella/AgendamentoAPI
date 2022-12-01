@@ -16,23 +16,24 @@ public class ContextSeries : DbContext
     {
         model.Entity<Paciente>().HasKey(p => p.pacienteId);
         model.Entity<Paciente>().Property(p => p.pacienteNome).IsRequired();
-        model.Entity<Paciente>().Property(p => p.pacienteCPF).IsRequired().HasMaxLength(11);
+        model.Entity<Paciente>().Property(p => p.pacienteCPF).HasMaxLength(15).IsRequired();
         model.Entity<Paciente>().Property(p => p.pacienteNascimento).IsRequired();
 
         model.Entity<Agendamento>().HasKey(a => a.agendamentoId);
+        model.Entity<Agendamento>().Property(a => a.agendamentoId).ValueGeneratedOnAdd();
         model.Entity<Agendamento>().Property(a => a.agendamentoMedico).IsRequired();
+        model.Entity<Agendamento>().Property(a => a.agendamentoEscialidade).IsRequired();
         model.Entity<Agendamento>().Property(a => a.agendamentoDia).IsRequired();
 
         model.Entity<ConfirmarAgendamento>().HasKey(c => c.confirmarId);
         model.Entity<ConfirmarAgendamento>().Property(c => c.confirmarAgendamento).IsRequired();
 
         model.Entity<Paciente>()
-            .HasMany(x => x.Agendamento)
-            .WithOne(x => x.Paciente)
-            .HasForeignKey(x => x.agendamentoId);
+            .HasMany(a => a.Agendamento)
+            .WithOne(p => p.Paciente);
 
-        model.Entity<ConfirmarAgendamento>()
-            .HasOne(x => x.Agendamento)
-            .WithOne(x => x.Confirmar);            
+        model.Entity<Agendamento>()
+            .HasMany(c => c.ConfirmarAgendamento)
+            .WithOne(a => a.Agendamento);
     }
 }

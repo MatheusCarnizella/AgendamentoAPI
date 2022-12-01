@@ -26,10 +26,10 @@ public class PacienteRepository : IPacienteRepository
         return paciente;
     }
 
-    public void Post(Paciente entity)
+    public async Task Post(Paciente entity)
     {
          _context.Set<Paciente>().Add(entity);
-         _context.SaveChanges();
+         await _context.SaveChangesAsync();
     }
 
     public void Put(Paciente entity)

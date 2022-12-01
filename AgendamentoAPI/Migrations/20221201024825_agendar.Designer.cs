@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AgendamentoAPI.Migrations
 {
     [DbContext(typeof(ContextSeries))]
-    [Migration("20221130004801_agendar")]
+    [Migration("20221201024825_agendar")]
     partial class agendar
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,24 +27,28 @@ namespace AgendamentoAPI.Migrations
             modelBuilder.Entity("AgendamentoAPI.Models.Agendamento", b =>
                 {
                     b.Property<int>("agendamentoId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("agendamentoId"), 1L, 1);
 
                     b.Property<DateTime>("agendamentoDia")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("agendamentoMedico")
+                    b.Property<string>("agendamentoEscialidade")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("confirmarId")
-                        .HasColumnType("int");
+                    b.Property<string>("agendamentoMedico")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("pacienteId")
                         .HasColumnType("int");
 
                     b.HasKey("agendamentoId");
 
-                    b.HasIndex("confirmarId");
+                    b.HasIndex("pacienteId");
 
                     b.ToTable("Agendamentos");
                 });
@@ -57,10 +61,15 @@ namespace AgendamentoAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("confirmarId"), 1L, 1);
 
+                    b.Property<int>("agendamentoId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("confirmarAgendamento")
                         .HasColumnType("bit");
 
                     b.HasKey("confirmarId");
+
+                    b.HasIndex("agendamentoId");
 
                     b.ToTable("confirmarAgendamentos");
                 });
@@ -76,13 +85,9 @@ namespace AgendamentoAPI.Migrations
                     b.Property<int>("agendamentoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("agendamentoMedico")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("pacienteCPF")
-                        .HasMaxLength(11)
-                        .HasColumnType("int")
-                        .IsFixedLength();
+                        .HasMaxLength(15)
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("pacienteNascimento")
                         .HasColumnType("datetime2");
@@ -100,24 +105,27 @@ namespace AgendamentoAPI.Migrations
                 {
                     b.HasOne("AgendamentoAPI.Models.Paciente", "Paciente")
                         .WithMany("Agendamento")
-                        .HasForeignKey("agendamentoId")
+                        .HasForeignKey("pacienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("AgendamentoAPI.Models.ConfirmarAgendamento", "Confirmar")
-                        .WithMany("Agendamento")
-                        .HasForeignKey("confirmarId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Confirmar");
 
                     b.Navigation("Paciente");
                 });
 
             modelBuilder.Entity("AgendamentoAPI.Models.ConfirmarAgendamento", b =>
                 {
+                    b.HasOne("AgendamentoAPI.Models.Agendamento", "Agendamento")
+                        .WithMany("ConfirmarAgendamento")
+                        .HasForeignKey("agendamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Agendamento");
+                });
+
+            modelBuilder.Entity("AgendamentoAPI.Models.Agendamento", b =>
+                {
+                    b.Navigation("ConfirmarAgendamento");
                 });
 
             modelBuilder.Entity("AgendamentoAPI.Models.Paciente", b =>
